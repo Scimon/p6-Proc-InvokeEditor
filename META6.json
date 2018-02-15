@@ -1,0 +1,19 @@
+{
+  "authors" : [
+    "Simon Proctor"
+  ],
+  "build-depends" : [ ],
+  "depends" : [ ],
+  "description" : "blah blah blah",
+  "license" : "Artistic-2.0",
+  "name" : "Proc::InvokeEditor",
+  "perl" : "6.c",
+  "provides" : {
+    "Proc::InvokeEditor" : "lib/Proc/InvokeEditor.pm6"
+  },
+  "resources" : [ ],
+  "source-url" : "",
+  "tags" : [ ],
+  "test-depends" : [ ],
+  "version" : "0.0.1"
+}
