@@ -1,7 +1,9 @@
+[![Build Status](https://travis-ci.org/Scimon/p6-Proc-InvokeEditor.svg?branch=master)](https://travis-ci.org/Scimon/p6-Proc-InvokeEditor)
+
 NAME
 ====
 
-Proc::InvokeEditor - blah blah blah
+Proc::InvokeEditor - Edit strings in an external editor. 
 
 SYNOPSIS
 ========
@@ -13,10 +15,10 @@ DESCRIPTION
 
 Proc::InvokeEditor is ...
 
-AUTHOR
-======
+AUTHORS
+=======
 
-Simon Proctor <simon.proctor@gmail.com>
+Simon Proctor <simon.proctor@gmail.com>, Matthew Chubb, Edward Francis, Kenric Leung
 
 COPYRIGHT AND LICENSE
 =====================

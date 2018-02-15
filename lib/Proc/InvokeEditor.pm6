@@ -1,5 +1,5 @@
 use v6.c;
-unit class Proc::InvokeEditor:ver<0.0.1>;
+unit class Proc::InvokeEditor:ver<0.0.1>:auth<Simon Proctor "simon.proctor@gmail.com", Matthew Chubb, Edward Francis, Kenric Leung>;
 
 has Str @!editors;
 
@@ -16,7 +16,7 @@ multi method edit-to-array( Str @lines --> Array ) {...}
 
 =head1 NAME
 
-Proc::InvokeEditor - blah blah blah
+Proc::InvokeEditor - Edit strings in an external editor. 
 
 =head1 SYNOPSIS
 
@@ -26,9 +26,9 @@ Proc::InvokeEditor - blah blah blah
 
 Proc::InvokeEditor is ...
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Simon Proctor <simon.proctor@gmail.com>
+Simon Proctor <simon.proctor@gmail.com>, Matthew Chubb, Edward Francis, Kenric Leung
 
 =head1 COPYRIGHT AND LICENSE
 
