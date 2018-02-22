@@ -3,7 +3,11 @@ unit class Proc::InvokeEditor:ver<0.0.1>:auth<Simon Proctor "simon.proctor@gmail
 
 has Str @!editors;
 
-method editors() { ("emacs") }
+submethod BUILD( :@editors = ["emacs"] ) {
+    @!editors = @editors;
+}
+
+method editors() { @!editors }
 
 multi method edit( *@lines --> Str ) {
     self.edit( @lines.join("\n") );
