@@ -3,14 +3,13 @@ unit class Proc::InvokeEditor:ver<0.0.1>:auth<Simon Proctor "simon.proctor@gmail
 
 has Str @!editors;
 
-multi method edit( Str $text --> Str ) {...}
-multi method edit( Str @lines --> Str ) {...}
+method editors() { ("emacs") }
 
-multi method edit-to-str( Str $text --> Str ) {...}
-multi method edit-to-str( Str @lines --> Str ) {...}
+multi method edit( *@lines --> Str ) {
+    self.edit( @lines.join("\n") );
+}
 
-multi method edit-to-array( Str $text --> Array ) {...}
-multi method edit-to-array( Str @lines --> Array ) {...}
+multi method edit( Str() $text --> Str ) {...}
 
 =begin pod
 
