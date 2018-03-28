@@ -15,10 +15,10 @@ DESCRIPTION
 
 Proc::InvokeEditor is ...
 
-AUTHORS
-=======
+AUTHOR
+======
 
-Simon Proctor <simon.proctor@gmail.com>, Matthew Chubb, Edward Francis, Kenric Leung
+Simon Proctor <simon.proctor@gmail.com>
 
 COPYRIGHT AND LICENSE
 =====================

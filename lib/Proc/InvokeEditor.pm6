@@ -1,13 +1,32 @@
 use v6.c;
-unit class Proc::InvokeEditor:ver<0.0.1>:auth<Simon Proctor "simon.proctor@gmail.com", Matthew Chubb, Edward Francis, Kenric Leung>;
+unit class Proc::InvokeEditor:ver<0.0.1>:auth<Simon Proctor "simon.proctor@gmail.com">;
+
+constant DEFAULT_EDITORS = Array[Str].new( |( <<VISUAL EDITOR>>.grep( { defined %*ENV{$_} } ).map( { %*ENV{$_} } ) ),
+                                          '/usr/bin/vi', '/bin/vi',
+                                          '/usr/bin/emacs', '/bin/emacs',
+                                          '/bin/ed', );
 
 has Str @!editors;
 
-submethod BUILD( :@editors = ["emacs"] ) {
+submethod BUILD( :@editors = DEFAULT_EDITORS ) {
     @!editors = @editors;
 }
 
-method editors() { @!editors }
+multi method editors(Proc::InvokeEditor:U:) {
+    DEFAULT_EDITORS;
+}
+
+multi method editors(Proc::InvokeEditor:U: *@) {
+    fail("Can't edit editor list in class, perhaps you'd like to create an object?");
+}
+
+multi method editors(Proc::InvokeEditor:D:) {
+    @!editors;
+}
+
+multi method editors(Proc::InvokeEditor:D: +@new-editors where { $_.all ~~ Str } ) {
+    @!editors = @new-editors;
+}
 
 multi method edit( *@lines --> Str ) {
     self.edit( @lines.join("\n") );
@@ -29,9 +48,9 @@ Proc::InvokeEditor - Edit strings in an external editor.
 
 Proc::InvokeEditor is ...
 
-=head1 AUTHORS
+=head1 AUTHOR
 
-Simon Proctor <simon.proctor@gmail.com>, Matthew Chubb, Edward Francis, Kenric Leung
+Simon Proctor <simon.proctor@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
