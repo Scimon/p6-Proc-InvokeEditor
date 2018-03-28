@@ -1,0 +1,7 @@
+Revision history for Proc-InvokeEditor
+
+(($NEXT}}
+
+0.0.1
+    - Initial version
+    - Can create an editor object, assigns edits and perform and edit.
