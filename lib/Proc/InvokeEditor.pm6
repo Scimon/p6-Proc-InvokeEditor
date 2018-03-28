@@ -1,7 +1,7 @@
 use v6.c;
 use File::Temp;
 
-unit class Proc::InvokeEditor:ver<0.0.1>:auth<Simon Proctor "simon.proctor@gmail.com">;
+unit class Proc::InvokeEditor:ver<0.0.2>:auth<Simon Proctor "simon.proctor@gmail.com">;
 
 =begin pod
 
