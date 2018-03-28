@@ -4,7 +4,9 @@
     "Simon Proctor"
   ],
   "build-depends" : [ ],
-  "depends" : [ ],
+  "depends" : [
+    "File::Temp"
+  ],
   "description" : "Edit strings in an external editor. ",
   "license" : "Artistic-2.0",
   "name" : "Proc::InvokeEditor",
