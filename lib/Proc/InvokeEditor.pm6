@@ -28,6 +28,29 @@ multi method editors(Proc::InvokeEditor:D: +@new-editors where { $_.all ~~ Str }
     @!editors = @new-editors;
 }
 
+multi method first_usable(Proc::InvokeEditor:D: --> Array[Str]) {
+    find-usable( @!editors );
+}
+
+multi method first_usable(Proc::InvokeEditor:U: --> Array[Str]) {
+    find-usable( DEFAULT_EDITORS );
+}
+
+
+sub find-usable( Str @possible --> Array[Str] ) {
+    my Str @out;
+    for @possible -> Str $test {
+        my ( $test-file, @args ) = $test.split( / \s / );
+
+        if $test-file.IO ~~ :e & :x {
+            @out.push($test-file, |@args);
+            return @out;
+        }
+    }
+    fail("Unable to find a useable editor in : {@possible.gist}");
+}
+
+
 multi method edit( *@lines --> Str ) {
     self.edit( @lines.join("\n") );
 }
