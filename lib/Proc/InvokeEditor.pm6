@@ -1,4 +1,6 @@
 use v6.c;
+use File::Temp;
+
 unit class Proc::InvokeEditor:ver<0.0.1>:auth<Simon Proctor "simon.proctor@gmail.com">;
 
 constant DEFAULT_EDITORS = Array[Str].new( |( <<VISUAL EDITOR>>.grep( { defined %*ENV{$_} } ).map( { %*ENV{$_} } ) ),
@@ -36,8 +38,7 @@ multi method first_usable(Proc::InvokeEditor:U: --> Array[Str]) {
     find-usable( DEFAULT_EDITORS );
 }
 
-
-sub find-usable( Str @possible --> Array[Str] ) {
+my sub find-usable( Str @possible --> Array[Str] ) {
     my Str @out;
     for @possible -> Str $test {
         my ( $test-file, @args ) = $test.split( / \s / );
@@ -55,7 +56,18 @@ multi method edit( *@lines --> Str ) {
     self.edit( @lines.join("\n") );
 }
 
-multi method edit( Str() $text --> Str ) {...}
+multi method edit(Proc::InvokeEditor:D: Str() $text --> Str ) {
+    my ( $file, $handle ) = tempfile;
+    
+    $handle.spurt( $text );
+    $handle.close();
+    
+    my $proc = Proc::Async.new( |$.first_usable() , $file );
+    
+    await $proc.start();
+
+    $file.IO.slurp;
+}
 
 =begin pod
 
