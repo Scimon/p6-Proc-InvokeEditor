@@ -52,7 +52,7 @@ my sub find-usable( Str @possible --> Array[Str] ) {
 }
 
 
-multi method edit( *@lines --> Str ) {
+multi method edit(Proc::InvokeEditor:D: *@lines --> Str ) {
     self.edit( @lines.join("\n") );
 }
 
@@ -62,7 +62,7 @@ multi method edit(Proc::InvokeEditor:D: Str() $text --> Str ) {
     $handle.spurt( $text );
     $handle.close();
     
-    my $proc = Proc::Async.new( |$.first_usable() , $file );
+    my $proc = Proc::Async.new( |self.first_usable() , $file );
     
     await $proc.start();
 
