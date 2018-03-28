@@ -12,19 +12,19 @@ submethod BUILD( :@editors = DEFAULT_EDITORS ) {
     @!editors = @editors;
 }
 
-multi method editors(Proc::InvokeEditor:U:) {
+multi method editors(Proc::InvokeEditor:U: --> Array[Str]) {
     DEFAULT_EDITORS;
 }
 
-multi method editors(Proc::InvokeEditor:U: *@) {
+multi method editors(Proc::InvokeEditor:U: *@ --> Array[Str]) {
     fail("Can't edit editor list in class, perhaps you'd like to create an object?");
 }
 
-multi method editors(Proc::InvokeEditor:D:) {
+multi method editors(Proc::InvokeEditor:D: --> Array[Str]) {
     @!editors;
 }
 
-multi method editors(Proc::InvokeEditor:D: +@new-editors where { $_.all ~~ Str } ) {
+multi method editors(Proc::InvokeEditor:D: +@new-editors where { $_.all ~~ Str } --> Array[Str]) {
     @!editors = @new-editors;
 }
 

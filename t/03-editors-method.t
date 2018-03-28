@@ -14,6 +14,6 @@ is $invoker.editors("/tmp/test-editor", "/tmp/editor2" ), @editors, "Allow a slu
 is $invoker.editors(), @editors, "Update stays";
 
 # Can't edit the editors array in the class method
-isa-ok Proc::InvokeEditor.editors("/bin/bad"), Failure, "Editing the editors returns a failure";
+isa-ok Proc::InvokeEditor.editors("/bin/bad"), Failure, "Can't set the class level editor list";
 
 done-testing
