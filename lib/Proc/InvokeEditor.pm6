@@ -3,11 +3,13 @@ use File::Temp;
 
 unit class Proc::InvokeEditor:ver<0.0.1>:auth<Simon Proctor "simon.proctor@gmail.com">;
 
-constant DEFAULT_EDITORS = Array[Str].new( |( <<VISUAL EDITOR>>.grep( { defined %*ENV{$_} } ).map( { %*ENV{$_} } ) ),
-                                          '/usr/bin/vi', '/bin/vi',
-                                          '/usr/bin/emacs', '/bin/emacs',
-                                          '/bin/ed', );
-
+sub DEFAULT_EDITORS() {
+    Array[Str].new( |( <<VISUAL EDITOR>>.grep( { defined %*ENV{$_} } ).map( { %*ENV{$_} } ) ),
+                    '/usr/bin/vi', '/bin/vi',
+                    '/usr/bin/emacs', '/bin/emacs',
+                    '/bin/ed', );
+}
+    
 has Str @!editors;
 
 submethod BUILD( :@editors = DEFAULT_EDITORS ) {
@@ -51,6 +53,13 @@ my sub find-usable( Str @possible --> Array[Str] ) {
     fail("Unable to find a useable editor in : {@possible.gist}");
 }
 
+multi method edit(Proc::InvokeEditor:U: *@lines --> Str ) {
+    Proc::InvokeEditor.new().edit( @lines.join("\n") );
+}
+
+multi method edit(Proc::InvokeEditor:U: Str() $text --> Str ) {
+    Proc::InvokeEditor.new().edit( $text );
+}
 
 multi method edit(Proc::InvokeEditor:D: *@lines --> Str ) {
     self.edit( @lines.join("\n") );

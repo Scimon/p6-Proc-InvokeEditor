@@ -1,5 +1,11 @@
 use v6.c;
 use Test;
+
+INIT {
+    my $path = $*PROGRAM.dirname;
+    %*ENV<EDITOR> =  $path ~ "/t04bin/exec.pl6 --flag";
+}
+
 use Proc::InvokeEditor;
 
 my $path = $*PROGRAM.dirname;
@@ -25,5 +31,8 @@ ok @class-result.elems > 0, "We have some kind of result";
 
 ok $invoker.editors( $path ~ "/t04bin/not-exec" ), "Nothing to find";
 isa-ok $invoker.first_usable(), Failure, "Got a failure if there's no script to run";
+
+
+is-deeply Proc::InvokeEditor.first_usable(), @expected, "Got the expected result for first useable";
 
 done-testing;
