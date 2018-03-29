@@ -1,7 +1,7 @@
 use v6.c;
 use File::Temp;
 
-unit class Proc::InvokeEditor:ver<0.0.2>:auth<Simon Proctor "simon.proctor@gmail.com">;
+unit class Proc::InvokeEditor:ver<0.0.3>:auth<Simon Proctor "simon.proctor@gmail.com">;
 
 sub DEFAULT_EDITORS() {
     Array[Str].new( |( <<VISUAL EDITOR>>.grep( { defined %*ENV{$_} } ).map( { %*ENV{$_} } ) ),
@@ -150,13 +150,16 @@ Class or object method. Returns an array of executable path string and then opti
 
 Class or object method, takes a string or list of strings. Fires up the external editor specifed by first_usable() and waits for it to complete then returns the updated result.
 
-=head1 ToDo
+=head1 TODO
 
 =item Windows support.
 
-=item Implement the rest of the original API
-
 =item Addtional Perl6-isms including Async editting allowing background processes.
+
+=head1 NOTE
+
+The original Perl5 module includes methods to turn off auto cleanup of temp files and to reuse the same file. This functionality is not planned for this version of the module,
+if required please raise a ticket.
 
 =head1 AUTHOR
 

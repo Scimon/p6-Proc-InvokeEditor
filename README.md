@@ -63,14 +63,17 @@ edit( $string )
 
 Class or object method, takes a string or list of strings. Fires up the external editor specifed by first_usable() and waits for it to complete then returns the updated result.
 
-ToDo
+TODO
 ====
 
   * Windows support.
 
-  * Implement the rest of the original API
-
   * Addtional Perl6-isms including Async editting allowing background processes.
+
+NOTE
+====
+
+The original Perl5 module includes methods to turn off auto cleanup of temp files and to reuse the same file. This functionality is not planned for this version of the module, if required please raise a ticket.
 
 AUTHOR
 ======
