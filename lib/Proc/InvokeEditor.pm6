@@ -13,7 +13,7 @@ Proc::InvokeEditor - Edit strings in an external editor.
 
     use Proc::InvokeEditor;
 
-    my $editor = Proc::InvokerEditor( :editors( [ "/usr/bin/emacs" ] ) );
+    my $editor = Proc::InvokeEditor( :editors( [ "/usr/bin/emacs" ] ) );
     my $text = $editor->edit( "Edit text below\n" );
 
 =head1 DESCRIPTION
@@ -118,7 +118,7 @@ multi method edit(Proc::InvokeEditor:U: Str() $text --> Str ) {
 }
 
 multi method edit(Proc::InvokeEditor:D: *@lines --> Str ) {
-    self.edit( @lines.join("\n") );
+    callwith( @lines.join("\n") );
 }
 
 multi method edit(Proc::InvokeEditor:D: Str() $text --> Str ) {
@@ -129,16 +129,24 @@ multi method edit(Proc::InvokeEditor:D: Str() $text --> Str ) {
     
     my $proc = Proc::Async.new( |self.first_usable() , $file );
     
-    await $proc.start();
-
-    $file.IO.slurp;
+    return await $proc.start().then( { $file.IO.slurp } );
 }
 
 =begin pod
 
+=head1 ToDo
+
+=item Windows support.
+
+=item Implement the rest of the original API
+
+=item Addtional Perl6-isms including Async editting allowing background processes.
+
 =head1 AUTHOR
 
 Simon Proctor <simon.proctor@gmail.com>
+
+Original Perl5 Module Authored by Micheal Stevens
 
 =head1 COPYRIGHT AND LICENSE
 

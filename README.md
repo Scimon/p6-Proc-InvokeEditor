@@ -10,7 +10,7 @@ SYNOPSIS
 
     use Proc::InvokeEditor;
 
-    my $editor = Proc::InvokerEditor( :editors( [ "/usr/bin/emacs" ] ) );
+    my $editor = Proc::InvokeEditor( :editors( [ "/usr/bin/emacs" ] ) );
     my $text = $editor->edit( "Edit text below\n" );
 
 DESCRIPTION
@@ -45,10 +45,21 @@ edit( $string )
 
 Class or object method, takes a string or list of strings. Fires up the external editor specifed by first_usable() and waits for it to complete then returns the updated result.
 
+ToDo
+====
+
+  * Windows support.
+
+  * Implement the rest of the original API
+
+  * Addtional Perl6-isms including Async editting allowing background processes.
+
 AUTHOR
 ======
 
 Simon Proctor <simon.proctor@gmail.com>
+
+Original Perl5 Module Authored by Micheal Stevens
 
 COPYRIGHT AND LICENSE
 =====================
