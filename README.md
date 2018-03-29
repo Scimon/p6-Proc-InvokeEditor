@@ -35,6 +35,15 @@ Getter / Setter for the array of editors accepts a postional arguments or an pos
 
 Can be called as a getter as a class method but will error if you try and set the editors as a class method.
 
+editors_env( @editors )
+-----------------------
+
+Object method only, given an array (or positional arguments) of Str keys will prepend to the editors array the value for that key in ENV (if one is defined).
+
+Returns the current list of editors.
+
+Fails if called as a class method. 
+
 first_usable()
 --------------
 
