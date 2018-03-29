@@ -39,7 +39,15 @@ multi method editors_env(Proc::InvokeEditor:U: *@ --> Array[Str] ) {
 multi method editors_env(Proc::InvokeEditor:D: +@keys where { $_.all ~~ Str } --> Array[Str] ) {
     @!editors.unshift( | @keys.grep( { defined %*ENV{$_} } ).map( { %*ENV{$_} } ) );
 }
-    
+
+multi method editors_prepend(Proc::InvokeEditor:U: *@ --> Array[Str] ) {
+    fail("Can't edit editor list in class, perhaps you'd like to create an object?");
+}
+
+multi method editors_prepend(Proc::InvokeEditor:D: +@new-editors --> Array[Str] ) {
+    @!editors.unshift( |@new-editors );
+}
+
 multi method first_usable(Proc::InvokeEditor:D: --> Array[Str]) {
     find-usable( @!editors );
 }
@@ -125,6 +133,14 @@ Object method only, given an array (or positional arguments) of Str keys will pr
 Returns the current list of editors.
 
 Fails if called as a class method. 
+
+=head2 editors_prepend( @editors )
+
+Object method only, given an array (or positional arguments) of Str values will prepend them to the editor list.
+
+Returns the current list of editors.
+
+Fails if called as a class method.
 
 =head2 first_usable()
 

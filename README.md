@@ -44,6 +44,15 @@ Returns the current list of editors.
 
 Fails if called as a class method. 
 
+editors_prepend( @editors )
+---------------------------
+
+Object method only, given an array (or positional arguments) of Str values will prepend them to the editor list.
+
+Returns the current list of editors.
+
+Fails if called as a class method.
+
 first_usable()
 --------------
 

@@ -20,10 +20,16 @@ is $invoker.editors_env($key), @editors, "Passing a non existant key does nothin
 %*ENV{$key} = "/bin/thing";
 @editors.unshift("/bin/thing");
 is $invoker.editors_env($key), @editors, "ENV key exists prepend to list";
+is $invoker.editors(), @editors, "Update stays";
+
+@editors.unshift("/usr/bin/foo","/usr/bin/foo2");
+is $invoker.editors_prepend(["/usr/bin/foo","/usr/bin/foo2"]), @editors, "Editor prepend works";
+is $invoker.editors(), @editors, "Update stays";
 
 # Can't edit the editors array in the class method
 isa-ok Proc::InvokeEditor.editors("/bin/bad"), Failure, "Can't set the class level editor list";
 isa-ok Proc::InvokeEditor.editors_env("BAD"), Failure, "Can't call editors ENV as a class method";
+isa-ok Proc::InvokeEditor.editors_prepend("/usr/bin/foo"), Failure, "Can't call editors ENV as a class method";
 
 done-testing;
 
