@@ -1,6 +1,8 @@
 Revision history for Proc-InvokeEditor
 
 {{$NEXT}}
+
+0.0.3  2018-03-29T13:14:33+01:00
     - Added editors_env and editors_prepend
     - Fixed spelling error in docs.
 
