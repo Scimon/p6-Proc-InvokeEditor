@@ -154,6 +154,8 @@ Class or object method, takes a string or list of strings. Fires up the external
 
 =item Windows support.
 
+=item Check PATH for possibles
+
 =item Addtional Perl6-isms including Async editting allowing background processes.
 
 =head1 NOTE
