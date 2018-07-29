@@ -2,14 +2,24 @@ use v6.c;
 use Test;
 use Proc::InvokeEditor;
 
+sub windows(){
+	my $path = $*PROGRAM.dirname;
+	($path ~ "/t05bin/doubler.bat").IO.SPEC ~~ IO::Spec::Win32;
+}
+
 my $path = $*PROGRAM.dirname;
 
-ok my $invoker = Proc::InvokeEditor.new( :editors( [ $path ~ "/t05bin/doubler.pl6" ] ) ), "Can create an invoker object"; 
+my $exec = windows() ?? [ $path ~ "/t05bin/doubler.bat" ] !! [ $path ~ "/t05bin/doubler.pl6" ];
+my $expected = windows() ?? "This is one line \nThis is one line \n" !! "This is one lineThis is one line";
 
-is $invoker.edit("This is one line"), "This is one lineThis is one line", "Doubler does it's thing";
+ok my $invoker = Proc::InvokeEditor.new( :editors( $exec ) ), "Can create an invoker object"; 
 
-%*ENV<VISUAL> =  $path ~ "/t05bin/doubler.pl6";
+is $invoker.edit("This is one line"), $expected, "Doubler does it's thing";
 
-is Proc::InvokeEditor.edit("This is also a line"), "This is also a lineThis is also a line", "Class method works too";
+%*ENV<VISUAL> =  windows() ?? $path ~ "/t05bin/doubler.bat" !! $path ~ "/t05bin/doubler.pl6";
+
+$expected = windows() ?? "This is also a line \nThis is also a line \n" !! "This is also a lineThis is also a line";
+
+is Proc::InvokeEditor.edit("This is also a line"), $expected, "Class method works too";
 
 done-testing
