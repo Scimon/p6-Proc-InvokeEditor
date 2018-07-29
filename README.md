@@ -72,11 +72,6 @@ TODO
 
   * Addtional Perl6-isms including Async editting allowing background processes.
 
-WINDOWS
-=======
-
-I am working on getting this working with Windows. Initially I'll look at having it working with PowerShell. 
-  
 NOTE
 ====
 
