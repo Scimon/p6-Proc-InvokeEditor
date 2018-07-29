@@ -1,29 +1,39 @@
 use v6.c;
 use Test;
 
+sub windows(){
+	my $path = $*PROGRAM.dirname;
+	($path ~ "/t04bin/exec.bat").IO.SPEC ~~ IO::Spec::Win32;
+}
+
 INIT {
     my $path = $*PROGRAM.dirname;
-    %*ENV<EDITOR> =  $path ~ "/t04bin/exec.pl6 --flag";
+
+    if ( windows ) {
+        %*ENV<EDITOR> =  $path ~ "/t04bin/exec.bat -flag";
+    } else {
+        %*ENV<EDITOR> =  $path ~ "/t04bin/exec.pl6 --flag";
+    }
 }
 
 use Proc::InvokeEditor;
 
 my $path = $*PROGRAM.dirname;
 
-my Str @expected = [$path  ~ "/t04bin/exec.pl6" ];
+my Str @expected = windows() ?? [$path  ~ "/t04bin/exec.bat" ] !! [$path  ~ "/t04bin/exec.pl6" ];
 
-ok my $invoker = Proc::InvokeEditor.new( :editors( ( $path ~ "/t04bin/not-exec", $path ~ "/t04bin/exec.pl6" ) ) ), "Can create an invoker object"; 
+ok my $invoker = Proc::InvokeEditor.new( :editors( ( $path ~ "/t04bin/not-exec", $path ~ "/t04bin/exec.pl6", $path ~ "/t04bin/exec.bat" ) ) ), "Can create an invoker object"; 
 is-deeply $invoker.first_usable(), @expected, "Got the expected result for first useable";
 
-ok $invoker.editors( $path ~ "/t04bin/exec.pl6", $path ~ "/t04bin/not-exec" ), "Updating the order";
+ok $invoker.editors( $path ~ "/t04bin/exec.pl6", $path ~ "/t04bin/exec.bat", $path ~ "/t04bin/not-exec" ), "Updating the order";
 is-deeply $invoker.first_usable(), @expected, "Got the expected result for first useable";
 
-@expected = [ $path  ~ "/t04bin/exec.pl6", "--flag"];
+@expected = windows() ?? [$path  ~ "/t04bin/exec.bat", "-flag" ] !! [$path  ~ "/t04bin/exec.pl6", "--flag" ];
 
-ok $invoker.editors( $path ~ "/t04bin/exec.pl6 --flag", $path ~ "/t04bin/not-exec" ), "Updating the order";
+ok $invoker.editors( $path ~ "/t04bin/exec.pl6 --flag", $path  ~ "/t04bin/exec.bat -flag", $path ~ "/t04bin/not-exec" ), "Updating the order";
 is-deeply $invoker.first_usable(), @expected, "Got the expected result for first useable";
 
-ok $invoker.editors( $path ~ "/t04bin/not-exec", $path ~ "/t04bin/exec.pl6 --flag"), "Updating the order";
+ok $invoker.editors( $path ~ "/t04bin/not-exec", $path ~ "/t04bin/exec.pl6 --flag", $path  ~ "/t04bin/exec.bat -flag" ), "Updating the order";
 is-deeply $invoker.first_usable(), @expected, "Got the expected result for first useable";
 
 ok my @class-result = Proc::InvokeEditor.first_usable(), "First usable as a class method returns a result";

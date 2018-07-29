@@ -68,8 +68,15 @@ TODO
 
   * Windows support.
 
+  * Check PATH for possibles
+
   * Addtional Perl6-isms including Async editting allowing background processes.
 
+WINDOWS
+=======
+
+I am working on getting this working with Windows. Initially I'll look at having it working with PowerShell. 
+  
 NOTE
 ====
 
@@ -88,3 +95,4 @@ COPYRIGHT AND LICENSE
 Copyright 2018 Simon Proctor
 
 This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
+

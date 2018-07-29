@@ -60,8 +60,12 @@ my sub find-usable( Str @possible --> Array[Str] ) {
     my Str @out;
     for @possible -> Str $test {
         my ( $test-file, @args ) = $test.split( / \s / );
-
-        if $test-file.IO ~~ :e & :x {
+		if $test-file.IO.SPEC ~~ IO::Spec::Win32 {
+			if $test-file.IO.extension.uc ~~ 'EXE'|'BAT' {
+				@out.push($test-file, |@args);
+				return @out;
+			}
+		} elsif $test-file.IO ~~ :e & :x {
             @out.push($test-file, |@args);
             return @out;
         }
