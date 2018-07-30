@@ -20,7 +20,7 @@ use Proc::InvokeEditor;
 
 my $path = $*PROGRAM.dirname;
 
-my Str @expected = windows() ?? [ "t\\t04bin\\exec.bat" ] !! [ "/t04bin/exec.pl6" ];
+my Str @expected = windows() ?? [ "t\\t04bin\\exec.bat" ] !! [ "t/t04bin/exec.pl6" ];
 
 ok my $invoker = Proc::InvokeEditor.new( :editors( ( $path ~ "/t04bin/not-exec", $path ~ "/t04bin/exec.pl6", $path ~ "/t04bin/exec.bat" ) ) ), "Can create an invoker object"; 
 is-deeply $invoker.first_usable(), @expected, "Got the expected result for first useable";
@@ -28,7 +28,7 @@ is-deeply $invoker.first_usable(), @expected, "Got the expected result for first
 ok $invoker.editors( $path ~ "/t04bin/exec.pl6", $path ~ "/t04bin/exec.bat", $path ~ "/t04bin/not-exec" ), "Updating the order";
 is-deeply $invoker.first_usable(), @expected, "Got the expected result for first useable";
 
-@expected = windows() ?? [ "t\\t04bin\\exec.bat", "-flag" ] !! [ "/t04bin/exec.pl6", "--flag" ];
+@expected = windows() ?? [ "t\\t04bin\\exec.bat", "-flag" ] !! [ "t/t04bin/exec.pl6", "--flag" ];
 
 ok $invoker.editors( $path ~ "/t04bin/exec.pl6 --flag", $path  ~ "/t04bin/exec.bat -flag", $path ~ "/t04bin/not-exec" ), "Updating the order";
 is-deeply $invoker.first_usable(), @expected, "Got the expected result for first useable";
