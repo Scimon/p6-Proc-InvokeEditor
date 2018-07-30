@@ -2,6 +2,10 @@ Revision history for Proc-InvokeEditor
 
 {{$NEXT}}
 
+0.0.4  2018-07-30T09:02:17+01:00
+    - Small updates to find-usable to return the relative path.
+    - Tests passing in Windows PowerShell
+
 0.0.3  2018-03-29T13:14:33+01:00
     - Added editors_env and editors_prepend
     - Fixed spelling error in docs.
