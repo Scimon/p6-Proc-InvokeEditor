@@ -9,11 +9,11 @@ sub DEFAULT_EDITORS() {
                     '/usr/bin/emacs', '/bin/emacs',
                     '/bin/ed', );
 }
-    
+
 has Str @!editors;
 
 submethod BUILD( :@editors = DEFAULT_EDITORS ) {
-    @!editors = @editors;
+  @!editors =  @editors;
 }
 
 multi method editors(Proc::InvokeEditor:U: --> Array[Str]) {
@@ -60,15 +60,15 @@ my sub find-usable( Str @possible --> Array[Str] ) {
     my Str @out;
     for @possible -> Str $test {
         my ( $test-file, @args ) = $test.split( / \s / );
-	if $test-file.IO ~~ :e &&
-           $test-file.IO.SPEC ~~ IO::Spec::Win32 {
-	    if $test-file.IO.extension.uc ~~ 'EXE'|'BAT' {
-		@out.push($test-file.IO.relative, |@args);
-		return @out;
-	    }
-	} elsif $test-file.IO ~~ :e & :x {
-            @out.push($test-file, |@args);
-            return @out;
+	          if $test-file.IO ~~ :e &&
+                $test-file.IO.SPEC ~~ IO::Spec::Win32 {
+	              if $test-file.IO.extension.uc ~~ 'EXE'|'BAT' {
+		                @out.push($test-file.IO.relative, |@args);
+		                return @out;
+	               }
+	          } elsif $test-file.IO ~~ :e & :x {
+                @out.push($test-file, |@args);
+                return @out;
         }
     }
     fail("Unable to find a useable editor in : {@possible.gist}");
@@ -88,12 +88,12 @@ multi method edit(Proc::InvokeEditor:D: *@lines --> Str ) {
 
 multi method edit(Proc::InvokeEditor:D: Str() $text --> Str ) {
     my ( $file, $handle ) = tempfile;
-	
+
     $handle.spurt( $text );
     $handle.close();
-    
+
     my $proc = Proc::Async.new( |self.first_usable() , $file.IO.path );
-    
+
     return await $proc.start().then( { $file.IO.slurp } );
 }
 
@@ -101,13 +101,13 @@ multi method edit(Proc::InvokeEditor:D: Str() $text --> Str ) {
 
 =head1 NAME
 
-Proc::InvokeEditor - Edit strings in an external editor. 
+Proc::InvokeEditor - Edit strings in an external editor.
 
 =head1 SYNOPSIS
 
     use Proc::InvokeEditor;
 
-    my $editor = Proc::InvokeEditor( :editors( [ "/usr/bin/emacs" ] ) );
+    my $editor = Proc::InvokeEditor.new( :editors( [ "/usr/bin/emacs" ] ) );
     my $text = $editor->edit( "Edit text below\n" );
 
 =head1 DESCRIPTION
@@ -123,7 +123,7 @@ Create a new Proc::InvokeEditor object, takes an optional list of paths to edito
 Note: currently all paths given must be complete paths, the system doesn't attempt an checking of the path environment for files.
 
 Editor strings can include command line arguments to pass and should expect to take a filename as there final argument.
-                                                            
+
 =head2 editors()
 
 Getter / Setter for the array of editors accepts a postional arguments or an postitional and sets the list of editors to that.
@@ -137,7 +137,7 @@ Object method only, given an array (or positional arguments) of Str keys will pr
 
 Returns the current list of editors.
 
-Fails if called as a class method. 
+Fails if called as a class method.
 
 =head2 editors_prepend( @editors )
 

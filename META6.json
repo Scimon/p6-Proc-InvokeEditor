@@ -7,7 +7,7 @@
   "depends" : [
     "File::Temp"
   ],
-  "description" : "Edit strings in an external editor. ",
+  "description" : "Edit strings in an external editor.",
   "license" : "Artistic-2.0",
   "name" : "Proc::InvokeEditor",
   "perl" : "6.c",
