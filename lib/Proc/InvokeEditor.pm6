@@ -1,7 +1,7 @@
-use v6.c;
+use v6;
 use File::Temp;
 
-unit class Proc::InvokeEditor:ver<0.0.4>:auth<Simon Proctor "simon.proctor@gmail.com">;
+unit class Proc::InvokeEditor:ver<0.0.5>:auth<Simon Proctor "simon.proctor@gmail.com">;
 
 sub DEFAULT_EDITORS() {
     Array[Str].new( |( <<VISUAL EDITOR>>.grep( { defined %*ENV{$_} } ).map( { %*ENV{$_} } ) ),
